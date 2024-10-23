@@ -5,16 +5,19 @@ import pandas as pd
 import os
 
 from matplotlib import font_manager, rc
-
 import myTextMining as tm
+
+isCloud = True
 
 def is_running_on_streamlit_cloud():
     #return "STREAMLIT_SERVER_PORT" in os.environ
     
-    server_address = os.environ.get("SERVER_NAME", "localhost")
-    if server_address in ["localhost", "127.0.0.1"]:
-         return False
-    return True
+    # server_address = os.environ.get("SERVER_NAME", "localhost")
+    # if server_address in ["localhost", "127.0.0.1"]:
+    #      return False
+    # return True
+
+    return isCloud
 
 @st.cache_data
 def visualize_barhgraph(counter, num_words):
