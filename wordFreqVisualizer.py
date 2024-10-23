@@ -9,12 +9,12 @@ from matplotlib import font_manager, rc
 import myTextMining as tm
 
 def is_running_on_streamlit_cloud():
-    return "STREAMLIT_SERVER_PORT" in os.environ
+    #return "STREAMLIT_SERVER_PORT" in os.environ
     
-    # server_address = os.environ.get("SERVER_NAME", "localhost")
-    # if server_address in ["localhost", "127.0.0.1"]:
-    #     return False
-    # return True
+    server_address = os.environ.get("SERVER_NAME", "localhost")
+    if server_address in ["localhost", "127.0.0.1"]:
+         return False
+    return True
 
 @st.cache_data
 def visualize_barhgraph(counter, num_words):
@@ -58,7 +58,7 @@ st.sidebar.write("## 설정")
 with st.sidebar.form('my_form'):
     data_file = st.file_uploader("파일 선택", type=['csv'])
     column_name = st.text_input('데이터가 있는 컬럼명', value='review')
-    freq = st.checkbox('빈도수 그래프')
+    freq = st.checkbox('빈도수 그래프', value=True)
     num_freq_words = st.slider('단어 수', 10, 50, 20, 1)
     wc = st.checkbox('워드클라우드')
     num_wc_words = st.slider('단어 수', 20, 500, 50, 10)
