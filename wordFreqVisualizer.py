@@ -2,23 +2,25 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 import streamlit as st
 import pandas as pd
+import os
 
 from matplotlib import font_manager, rc
 
 import myTextMining as tm
 
-
+def is_running_on_streamlit_cloud():
+    return "STREAMLIT_SERVER_PORT" in os.environ
 
 @st.cache_data
-
 def visualize_barhgraph(counter, num_words):
 
-    #font_path = "c:/Windows/Fonts/malgun.ttf"
-    #font_name = font_manager.FontProperties(fname=font_path).get_name()
-
-    font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
-    font_name = 'NanumGothic'
-    font_manager.fontManager.addfont(font_path)
+    if is_running_on_streamlit_cloud:
+        font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
+        font_name = 'NanumGothic'
+        font_manager.fontManager.addfont(font_path)
+    else:
+        font_path = "c:/Windows/Fonts/malgun.ttf"
+        font_name = font_manager.FontProperties(fname=font_path).get_name() 
 
     rc('font', family=font_name)
 
@@ -30,8 +32,14 @@ def visualize_barhgraph(counter, num_words):
     st.pyplot(fig)
 
 def visualize_wordcloud(counter, num_words):
+        
+    if is_running_on_streamlit_cloud:
+        font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'      
+    else:    
+        font_path = "c:/Windows/fonts/malgun.ttf"
 
-    wordcloud = tm.generate_wordcloud(counter, num_words)
+    wordcloud = tm.generate_wordcloud(counter, num_words, font_path)
+
     fig, ax = plt.subplots()
     ax.imshow(wordcloud)
     ax.axis('off')
@@ -59,7 +67,6 @@ status = st.info('분석할 파일을 업로드하고, 시각화 수단을 선�
 if submitted:
     if data_file:
         status.info('데이터를 분석 중입니다.')
-        
         #data_file = "./data/daum_movie_review.csv"
         corpus = tm.load_corpus_from_csv(data_file, column_name)  
         counter = tm.analyze_word_freq(corpus)

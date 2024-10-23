@@ -3,6 +3,7 @@ import streamlit as st
 from konlpy.tag import Komoran
 from collections import Counter
 
+
 def load_corpus_from_csv(filename, column):
     data_df = pd.read_csv(filename)
     corpus = list(data_df[column])
@@ -25,11 +26,9 @@ def analyze_word_freq(corpus):
     counter = Counter(result_tokens)
     return counter
 
-def generate_wordcloud(counter, num_words):
+def generate_wordcloud(counter, num_words, font_path):
         # 워드클라우드 시각화
     from wordcloud import WordCloud
-    font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
-    #font_path = "c:/Windows/fonts/malgun.ttf"
 
     # WordCloud 객체 생성
     wordcloud = WordCloud(
