@@ -57,6 +57,13 @@ def visualize_wordcloud(counter, num_words):
 # 웹 대시보드
 #######################################
 
+st.set_page_config(
+    page_title="Word Frequency Visualizer",
+    page_icon="📊",
+    #layout="wide"
+    #initial_sidebar_state="expanded"
+)
+
 st.sidebar.write("## 설정")
 with st.sidebar.form('my_form'):
     data_file = st.file_uploader("파일 선택", type=['csv'])
