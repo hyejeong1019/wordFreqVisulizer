@@ -28,7 +28,8 @@ def analyze_word_freq(corpus):
 def generate_wordcloud(counter, num_words):
         # 워드클라우드 시각화
     from wordcloud import WordCloud
-    font_path = "c:/Windows/fonts/malgun.ttf"
+    font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
+    #font_path = "c:/Windows/fonts/malgun.ttf"
 
     # WordCloud 객체 생성
     wordcloud = WordCloud(

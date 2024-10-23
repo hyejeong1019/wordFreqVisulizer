@@ -12,8 +12,14 @@ import myTextMining as tm
 @st.cache_data
 
 def visualize_barhgraph(counter, num_words):
-    font_path = "c:/Windows/Fonts/malgun.ttf"
-    font_name = font_manager.FontProperties(fname=font_path).get_name()
+
+    #font_path = "c:/Windows/Fonts/malgun.ttf"
+    #font_name = font_manager.FontProperties(fname=font_path).get_name()
+
+    font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
+    font_name = 'NanumGothic'
+    font_manager.fontManager.addfont(font_path)
+
     rc('font', family=font_name)
 
     word_list = [word for word, _ in counter.most_common(num_words)]
@@ -53,6 +59,7 @@ status = st.info('분석할 파일을 업로드하고, 시각화 수단을 선�
 if submitted:
     if data_file:
         status.info('데이터를 분석 중입니다.')
+        
         #data_file = "./data/daum_movie_review.csv"
         corpus = tm.load_corpus_from_csv(data_file, column_name)  
         counter = tm.analyze_word_freq(corpus)
