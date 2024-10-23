@@ -10,11 +10,16 @@ import myTextMining as tm
 
 def is_running_on_streamlit_cloud():
     return "STREAMLIT_SERVER_PORT" in os.environ
+    
+    # server_address = os.environ.get("SERVER_NAME", "localhost")
+    # if server_address in ["localhost", "127.0.0.1"]:
+    #     return False
+    # return True
 
 @st.cache_data
 def visualize_barhgraph(counter, num_words):
 
-    if is_running_on_streamlit_cloud:
+    if is_running_on_streamlit_cloud():
         font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
         font_name = 'NanumGothic'
         font_manager.fontManager.addfont(font_path)
@@ -33,7 +38,7 @@ def visualize_barhgraph(counter, num_words):
 
 def visualize_wordcloud(counter, num_words):
         
-    if is_running_on_streamlit_cloud:
+    if is_running_on_streamlit_cloud():
         font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'      
     else:    
         font_path = "c:/Windows/fonts/malgun.ttf"
