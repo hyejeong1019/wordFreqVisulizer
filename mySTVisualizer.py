@@ -6,7 +6,7 @@ import myTextMining as tm
 
 def is_running_on_streamlit_cloud():
 
-    isCloud=False
+    isCloud = True
     
     #return "STREAMLIT_SERVER_PORT" in os.environ
     
