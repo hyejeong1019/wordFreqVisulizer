@@ -1,7 +1,5 @@
 
 import streamlit as st
-import pandas as pd
-import os
 
 import myTextMining as tm
 import mySTVisualizer as sv
