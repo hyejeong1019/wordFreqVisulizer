@@ -17,10 +17,6 @@ def is_running_on_streamlit_cloud():
         return False
     return True
 
-    #isCloud=False
-
-    #return isCloud
-
 @st.cache_data
 def visualize_barhgraph(counter, num_words):
 
