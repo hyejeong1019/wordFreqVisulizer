@@ -7,15 +7,15 @@ import os
 
 import myTextMining as tm
 
-def is_running_on_streamlit_cloud():
+def is_running_on_localserver():
 
     #return "STREAMLIT_SERVER_PORT" in os.environ
     
     server_address = os.environ.get("SERVER_NAME", "localhost")
     print(server_address)
     if server_address in ["localhost", "127.0.0.1"]:
-        return False
-    return True
+        return True
+    return False
 
 @st.cache_data
 def visualize_barhgraph(counter, num_words):
