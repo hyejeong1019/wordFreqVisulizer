@@ -11,22 +11,24 @@ def is_running_on_localserver():
 
     #return "STREAMLIT_SERVER_PORT" in os.environ
     
-    server_address = os.environ.get("SERVER_NAME", "localhost")
-    print(server_address)
-    if server_address in ["localhost", "127.0.0.1"]:
-        return True
+    # server_address = os.environ.get("SERVER_NAME", "localhost")
+    # print(server_address)
+    # if server_address in ["localhost", "127.0.0.1"]:
+    #     return True
+    # return False
     return False
 
 @st.cache_data
 def visualize_barhgraph(counter, num_words):
 
-    if is_running_on_streamlit_cloud():
+    if is_running_on_localserver():
+        font_path = "c:/Windows/Fonts/malgun.ttf"
+        font_name = font_manager.FontProperties(fname=font_path).get_name() 
+    else:
         font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
         font_name = 'NanumGothic'
         font_manager.fontManager.addfont(font_path)
-    else:
-        font_path = "c:/Windows/Fonts/malgun.ttf"
-        font_name = font_manager.FontProperties(fname=font_path).get_name() 
+        
 
     rc('font', family=font_name)
 
@@ -39,10 +41,10 @@ def visualize_barhgraph(counter, num_words):
 
 def visualize_wordcloud(counter, num_words):
         
-    if is_running_on_streamlit_cloud():
-        font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'      
+    if is_running_on_localserver():
+        font_path = "c:/Windows/fonts/malgun.ttf"      
     else:    
-        font_path = "c:/Windows/fonts/malgun.ttf"
+        font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
 
     wordcloud = tm.generate_wordcloud(counter, num_words, font_path)
 
