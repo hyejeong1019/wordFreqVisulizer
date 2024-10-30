@@ -3,9 +3,10 @@ import streamlit as st
 from konlpy.tag import Komoran
 from collections import Counter
 
-
 def load_corpus_from_csv(filename, column):
     data_df = pd.read_csv(filename)
+    if data_df[column].isnull().sum():
+        data_df.dropna(subset=[column], inplace=True)
     corpus = list(data_df[column])
     return corpus
 

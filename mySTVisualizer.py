@@ -1,6 +1,5 @@
 import streamlit as st
-import pandas as pd
-from matplotlib import font_manager, rc
+from matplotlib import font_manager
 import matplotlib.pyplot as plt
 
 import os
@@ -24,11 +23,10 @@ def regist_korean_font():
         font_manager.fontManager.addfont(font_file)
     font_manager._load_fontmanager(try_read_cache=False) 
 
-@st.dialog("데이터 확인하기")
-def view_raw_data_dialog(data_file):
-    #data_df = tm.get_dataframe_from_csv(data_file)
-    data_df = pd.read_csv(data_file)
-    st.write(data_df.head())
+@st.dialog("데이터 확인하기", width='large')
+def view_raw_data_dialog(data_df):
+    num_data = st.number_input("확인할 데이터 수", value=10)
+    st.write(data_df.head(num_data))
 
 @st.cache_data
 def visualize_barhgraph(counter, num_words):

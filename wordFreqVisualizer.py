@@ -4,6 +4,8 @@ import streamlit as st
 import myTextMining as tm
 import mySTVisualizer as sv
 
+import pandas as pd
+
 #######################################
 # 웹 대시보드
 #######################################
@@ -22,7 +24,8 @@ with st.sidebar:
     column_name = st.text_input('데이터가 있는 컬럼명', value='review')
     if st.button("데이터 파일 확인"): 
         if data_file:
-            sv.view_raw_data_dialog(data_file)
+            data_df = pd.read_csv(data_file)
+            sv.view_raw_data_dialog(data_df)
         else:
             st.sidebar.warning("데이터 파일을 업로드 후 데이터를 확인하세요.")
 
@@ -42,7 +45,6 @@ status = st.info('분석할 파일을 업로드하고, 시각화 수단을 선�
 if submitted:
     if data_file:
         status.info('데이터를 분석 중입니다.')
-        #data_file = "./data/daum_movie_review.csv"
         corpus = tm.load_corpus_from_csv(data_file, column_name)
         counter = tm.analyze_word_freq(corpus)
         status.info(f'분석이 완료되었습니다 ({len(corpus):,}개의 리뷰, {counter.total():,}개의 단어)')
