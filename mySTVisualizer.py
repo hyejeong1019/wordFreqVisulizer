@@ -18,7 +18,6 @@ def get_korean_font_info():
 def regist_korean_font():
 
     font_path, _, _ = get_korean_font_info()
-    #font_path = [os.getcwd() + '/myFonts']
     font_files = font_manager.findSystemFonts(fontpaths=[font_path])
 
     for font_file in font_files:

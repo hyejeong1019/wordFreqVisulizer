@@ -19,17 +19,12 @@ sv.regist_korean_font()
 
 with st.sidebar:
     data_file = st.file_uploader("파일 선택", type=['csv'])
-    #left, right = st.sidebar.columns(2)
-    col1, col2 = st.columns(2)
-    with col1:
-        column_name = st.text_input('데이터가 있는 컬럼명', value='review')
-    with col2:
-        if st.button("데이터 파일 확인"): 
-            if data_file:
-                sv.view_raw_data_dialog(data_file)
-            else:
-                st.sidebar.warning("데이터 파일을 업로드 후 데이터를 확인하세요.")
-
+    column_name = st.text_input('데이터가 있는 컬럼명', value='review')
+    if st.button("데이터 파일 확인"): 
+        if data_file:
+            sv.view_raw_data_dialog(data_file)
+        else:
+            st.sidebar.warning("데이터 파일을 업로드 후 데이터를 확인하세요.")
 
     st.write("## 설정")
     with st.form('my_form'):
