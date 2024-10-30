@@ -4,10 +4,14 @@ from konlpy.tag import Komoran
 from collections import Counter
 
 def load_corpus_from_csv(filename, column):
+
+    corpus = None
     data_df = pd.read_csv(filename)
-    if data_df[column].isnull().sum():
-        data_df.dropna(subset=[column], inplace=True)
-    corpus = list(data_df[column])
+    if column in data_df.columns:
+        if data_df[column].isnull().sum():
+            data_df.dropna(subset=[column], inplace=True)
+        corpus = list(data_df[column])
+    
     return corpus
 
 def tokenize_data(corpus):
