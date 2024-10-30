@@ -11,25 +11,33 @@ def is_running_on_localserver():
 
     #return "STREAMLIT_SERVER_PORT" in os.environ
     
-    # server_address = os.environ.get("SERVER_NAME", "localhost")
-    # print(server_address)
-    # if server_address in ["localhost", "127.0.0.1"]:
-    #     return True
-    # return False
-    return False
+    server_address = os.environ.get("SERVER_NAME", "localhost")
+    print(server_address)
+    if server_address in ["localhost", "127.0.0.1"]:
+        return False
+    return True
+
+@st.cache_data
+def regist_korean_font():
+    font_path = [os.getcwd() + '/myFonts']
+    font_files = font_manager.findSystemFonts(fontpaths=font_path)
+
+    for font_file in font_files:
+        font_manager.fontManager.addfont(font_file)
+    font_manager._load_fontmanager(try_read_cache=False) 
+
+@st.dialog("데이터 확인하기")
+def view_raw_data_dialog(data_file):
+    data_df = tm.get_dataframe_from_csv(data_file)
+    st.write(data_df.head())
 
 @st.cache_data
 def visualize_barhgraph(counter, num_words):
 
-    if is_running_on_localserver():
-        font_path = "c:/Windows/Fonts/malgun.ttf"
-        font_name = font_manager.FontProperties(fname=font_path).get_name() 
-    else:
-        font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
-        font_name = 'NanumGothic'
-        font_manager.fontManager.addfont(font_path)
-        
-
+    # fontNames = [f.name for f in font_manager.fontManager.ttflist if 'Nanum' in f.name]
+    # font_name = fontNames[0]
+    # print(fontNames)
+    font_name = 'NanumGothic'
     rc('font', family=font_name)
 
     word_list = [word for word, _ in counter.most_common(num_words)]
@@ -41,12 +49,10 @@ def visualize_barhgraph(counter, num_words):
 
 def visualize_wordcloud(counter, num_words):
         
-    if is_running_on_localserver():
-        font_path = "c:/Windows/fonts/malgun.ttf"      
-    else:    
-        font_path = '/usr/share/fonts/truetype/nanum/NanumGothic.ttf'
+    font_path = os.getcwd() + '/myFonts/'
+    font_file = 'NanumGothic.ttf'
 
-    wordcloud = tm.generate_wordcloud(counter, num_words, font_path)
+    wordcloud = tm.generate_wordcloud(counter, num_words, font_path + font_file)
 
     fig, ax = plt.subplots()
     ax.imshow(wordcloud)
