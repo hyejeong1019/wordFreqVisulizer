@@ -7,20 +7,19 @@ import os
 
 import myTextMining as tm
 
-def is_running_on_localserver():
-
-    #return "STREAMLIT_SERVER_PORT" in os.environ
+def get_korean_font_info():
     
-    server_address = os.environ.get("SERVER_NAME", "localhost")
-    print(server_address)
-    if server_address in ["localhost", "127.0.0.1"]:
-        return False
-    return True
+    # fontNames = [f.name for f in font_manager.fontManager.ttflist if 'Nanum' in f.name]
+    font_path = os.getcwd() + '/myFonts'
+    font_file = font_path + '/NanumGothic.ttf'
+    font_name = 'NanumGothic'
+    return font_path, font_name, font_file
 
 @st.cache_data
 def regist_korean_font():
-    font_path = [os.getcwd() + '/myFonts']
-    font_files = font_manager.findSystemFonts(fontpaths=font_path)
+
+    font_path, _, _ = get_korean_font_info()
+    font_files = font_manager.findSystemFonts(fontpaths=[font_path])
 
     for font_file in font_files:
         font_manager.fontManager.addfont(font_file)
@@ -34,10 +33,7 @@ def view_raw_data_dialog(data_file):
 @st.cache_data
 def visualize_barhgraph(counter, num_words):
 
-    # fontNames = [f.name for f in font_manager.fontManager.ttflist if 'Nanum' in f.name]
-    # font_name = fontNames[0]
-    # print(fontNames)
-    font_name = 'NanumGothic'
+    _, _, font_name = get_korean_font_info()
     rc('font', family=font_name)
 
     word_list = [word for word, _ in counter.most_common(num_words)]
@@ -48,11 +44,9 @@ def visualize_barhgraph(counter, num_words):
     st.pyplot(fig)
 
 def visualize_wordcloud(counter, num_words):
-        
-    font_path = os.getcwd() + '/myFonts/'
-    font_file = 'NanumGothic.ttf'
 
-    wordcloud = tm.generate_wordcloud(counter, num_words, font_path + font_file)
+    _, font_file, _ = get_korean_font_info()
+    wordcloud = tm.generate_wordcloud(counter, num_words, font_file)
 
     fig, ax = plt.subplots()
     ax.imshow(wordcloud)
