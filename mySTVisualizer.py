@@ -1,5 +1,5 @@
 import streamlit as st
-
+import pandas as pd
 from matplotlib import font_manager, rc
 import matplotlib.pyplot as plt
 
@@ -14,7 +14,7 @@ def get_korean_font_info():
     font_name = 'NanumGothic'
     return font_path, font_file, font_name
 
-#@st.cache_data
+@st.cache_data
 def regist_korean_font():
 
     font_path, _, _ = get_korean_font_info()
@@ -26,7 +26,8 @@ def regist_korean_font():
 
 @st.dialog("데이터 확인하기")
 def view_raw_data_dialog(data_file):
-    data_df = tm.get_dataframe_from_csv(data_file)
+    #data_df = tm.get_dataframe_from_csv(data_file)
+    data_df = pd.read_csv(data_file)
     st.write(data_df.head())
 
 @st.cache_data
