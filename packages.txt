@@ -1,2 +1,1 @@
 openjdk-17-jdk
-fonts-nanum
