@@ -8,18 +8,18 @@ import os
 import myTextMining as tm
 
 def get_korean_font_info():
-
     # fontNames = [f.name for f in font_manager.fontManager.ttflist if 'Nanum' in f.name]
     font_path = os.getcwd() + '/myFonts'
     font_file = font_path + '/NanumGothic.ttf'
     font_name = 'NanumGothic'
     return font_path, font_file, font_name
 
-@st.cache_data
+#@st.cache_data
 def regist_korean_font():
 
-    font_path, _, _ = get_korean_font_info()
-    font_files = font_manager.findSystemFonts(fontpaths=[font_path])
+    #font_path, _, _ = get_korean_font_info()
+    font_path = [os.getcwd() + '/myFonts']
+    font_files = font_manager.findSystemFonts(fontpaths=font_path)
 
     for font_file in font_files:
         font_manager.fontManager.addfont(font_file)
