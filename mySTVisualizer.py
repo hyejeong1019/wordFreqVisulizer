@@ -17,9 +17,9 @@ def get_korean_font_info():
 #@st.cache_data
 def regist_korean_font():
 
-    #font_path, _, _ = get_korean_font_info()
-    font_path = [os.getcwd() + '/myFonts']
-    font_files = font_manager.findSystemFonts(fontpaths=font_path)
+    font_path, _, _ = get_korean_font_info()
+    #font_path = [os.getcwd() + '/myFonts']
+    font_files = font_manager.findSystemFonts(fontpaths=[font_path])
 
     for font_file in font_files:
         font_manager.fontManager.addfont(font_file)
@@ -34,7 +34,7 @@ def view_raw_data_dialog(data_file):
 def visualize_barhgraph(counter, num_words):
 
     _, _, font_name = get_korean_font_info()
-    rc('font', family=font_name)
+    plt.rc('font', family=font_name)
 
     word_list = [word for word, _ in counter.most_common(num_words)]
     count_list = [count for _, count in counter.most_common(num_words)]
